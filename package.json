@@ -1,0 +1,30 @@
+{
+  "name": "nanocrane",
+  "version": "0.0.0",
+  "description": "static-site builder for choo",
+  "main": "index.js",
+  "scripts": {
+    "test": "standard"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/kodedninja/nanocrane"
+  },
+  "keywords": [
+    "choo",
+    "static"
+  ],
+  "author": "kodedninja",
+  "license": "ISC",
+  "devDependencies": {
+    "choo": "^7.0.0",
+    "standard": "^13.1.0",
+    "tape": "^4.11.0"
+  },
+  "dependencies": {
+    "html-minifier": "^4.0.0",
+    "ncp": "^2.0.0",
+    "parse-entities": "^1.2.2",
+    "rimraf": "^3.0.0"
+  }
+}
