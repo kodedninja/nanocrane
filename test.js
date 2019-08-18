@@ -17,7 +17,6 @@ testPromise('arguments are required', async function (t) {
   await t.rejects(crane.bind(undefined, app, { content: {} }, 5), 'with incorrect html')
 })
 
-
 function getApp () {
   var app = choo()
 
