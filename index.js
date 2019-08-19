@@ -50,11 +50,14 @@ module.exports = async function (app, extendState, htmlTemplate, options) {
   })
 
   // copy directories
-  options.copy.map(async function (name) {
-    var srcPath = path.resolve(process.cwd(), name)
-    var destPath = `${options.output}/${path.basename(name)}`
-    await ncp(srcPath, destPath)
-    if (options.verbose) console.log(`copied ${name}`)
+  options.copy.map(async function (srcPath) {
+    var destPath = `${options.output}/${path.basename(srcPath)}`
+    try {
+      await ncp(srcPath, destPath)
+      if (options.verbose) console.log(`copied ${srcPath}`)
+    } catch (err) {
+      console.error(err)
+    }
   })
 }
 

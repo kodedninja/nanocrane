@@ -6,7 +6,7 @@ var content = {
   '/': { title: 'home' },
   '/about': { title: 'about' }
 }
-var html = `
+var template = `
 <html>
   <head>
     <title><!-- @title --></title>
@@ -21,7 +21,7 @@ var app = choo()
 app.route('*', function (state, emit) {
   var page = state.content[state.href || '/']
   emit(state.events.DOMTITLECHANGE, page.title)
-  
+
   return html`
     <body>
       <div>${page.title}</div>
@@ -29,6 +29,6 @@ app.route('*', function (state, emit) {
   `
 })
 
-nanocrane(app.mount('body'), { content: content }, html, {
+nanocrane(app.mount('body'), { content: content }, template, {
   verbose: true
 })
