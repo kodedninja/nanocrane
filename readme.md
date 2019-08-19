@@ -8,7 +8,7 @@
 
 Versatile static-site builder library for [Choo](https://github.com/choojs/choo).
 
-Merges an exported Choo application + a content object + an HTML string and outputs a set of static HTML files.
+Merges an exported Choo application + a state object with content + an HTML string and outputs a set of static HTML files.
 
 ## Installation
 ```
@@ -40,11 +40,11 @@ nanocrane(app, { content: content }, template)
 
 ## Usage
 
-### `nanocrane(app, content, htmlString, options)`
+### `nanocrane(app, state, htmlString, options)`
 
-`app` is a mounted Choo application, `content` is an object, `htmlString` is the template of the outputted HTML files.
+`app` is a mounted Choo application, `state` is an object that'll be forwarded to Choo's state, `htmlString` is the template of the outputted HTML files.
 
-It accepts the content to follow [`nanocontent`](https://github.com/jondashkyle/nanocontent)'s basic structure.
+`state.content` must be set and follow [`nanocontent`](https://github.com/jondashkyle/nanocontent)'s basic structure.
 
 In the template it'll replace the following:
 
