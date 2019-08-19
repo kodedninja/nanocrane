@@ -100,7 +100,7 @@ test('generates correct html', async function (t) {
     <!-- @state -->
     <!-- @content -->
   `
-  var state = `{"events":{"DOMCONTENTLOADED":"DOMContentLoaded","DOMTITLECHANGE":"DOMTitleChange","REPLACESTATE":"replaceState","PUSHSTATE":"pushState","NAVIGATE":"navigate","POPSTATE":"popState","RENDER":"render"},"components":{},"content":{"/":{"title":"home"}},"cache":null,"href":"","query":{},"route":"*","params":{"wildcard":""},"title":"home"}`
+  var state = `window.initialState={"events":{"DOMCONTENTLOADED":"DOMContentLoaded","DOMTITLECHANGE":"DOMTitleChange","REPLACESTATE":"replaceState","PUSHSTATE":"pushState","NAVIGATE":"navigate","POPSTATE":"popState","RENDER":"render"},"components":{},"content":{"/":{"title":"home"}},"cache":null,"href":"","query":{},"route":"*","params":{"wildcard":""},"title":"home"}`
 
   await crane(app, { content: content }, html)
 

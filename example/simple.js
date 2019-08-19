@@ -10,7 +10,7 @@ var template = `
 <html>
   <head>
     <title><!-- @title --></title>
-    <script>window.initialState = '<!-- @state -->'</script>
+    <!-- @state -->
   </head>
   <!-- @content -->
 </html>

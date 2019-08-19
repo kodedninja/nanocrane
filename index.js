@@ -64,7 +64,7 @@ module.exports = async function (app, extendState, htmlTemplate, options) {
 function decorate (template, state, rendered) {
   return template
     .replace(PATTERN_CONTENT, decode(rendered))
-    .replace(PATTERN_STATE, JSON.stringify(state))
+    .replace(PATTERN_STATE, `<script>window.initialState=${JSON.stringify(state)}</script>`)
     .replace(PATTERN_TITLE, state.title)
 }
 

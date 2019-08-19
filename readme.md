@@ -29,7 +29,7 @@ var template = `
 <html>
   <head>
     <title><!-- @title --></title>
-    <script>window.initialState = '<!-- @state -->'</script>
+    <!-- @state -->
   </head>
   <!-- @content -->
 </html>
@@ -49,7 +49,7 @@ It accepts the content to follow [`nanocontent`](https://github.com/jondashkyle/
 In the template it'll replace the following:
 
 - `<!-- @content -->` ― with the HTML output of the app
-- `<!-- @state -->` ― with the initial state
+- `<!-- @state -->` ― with a script element that sets the initial state for Choo
 - `<!-- @title -->` ― with the title of the current page
 
 Options:
