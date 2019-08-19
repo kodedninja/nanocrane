@@ -56,7 +56,7 @@ module.exports = async function (app, extendState, htmlTemplate, options) {
       await ncp(srcPath, destPath)
       if (options.verbose) console.log(`copied ${srcPath}`)
     } catch (err) {
-      console.error(err)
+      console.error(`ERR: could not copy ${srcPath}`)
     }
   })
 }
