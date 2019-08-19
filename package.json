@@ -1,7 +1,7 @@
 {
   "name": "nanocrane",
   "version": "0.0.0",
-  "description": "static-site builder for choo",
+  "description": "versatile static-site builder library for choo",
   "main": "index.js",
   "scripts": {
     "test": "node test.js && standard"
