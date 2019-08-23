@@ -5,6 +5,7 @@ var choo = require('choo')
 var html = require('choo/html')
 var fs = require('fs')
 var path = require('path')
+var fake = require('fek')
 var crane = require('.')
 
 var test = tapePromise(tape)
@@ -113,6 +114,33 @@ test('generates correct html', async function (t) {
   mock.restore()
 })
 
+test('options.clear', async function (t) {
+  t.plan(1)
+
+  var app = getApp()
+  var outputPath = './public'
+
+  // mock fs
+  mock({
+    public: {
+      'text.txt': 'hello world'
+    }
+  })
+
+  await crane(app, { content: {} }, '', {
+    clear: false
+  })
+
+  t.equals(fs.existsSync(path.join(outputPath, 'test.txt')), false, 'output was not cleaned')
+
+  mock.restore()
+})
+
+test('options.copy', function (t) {
+  t.plan(1)
+  t.pass('TO IMPLEMENT')
+})
+
 test('options.output', async function (t) {
   t.plan(1)
 
@@ -129,9 +157,27 @@ test('options.output', async function (t) {
   mock.restore()
 })
 
-test('options.copy', function (t) {
-  t.plan(1)
-  t.pass('TO IMPLEMENT')
+test('options.outputRoute', async function (t) {
+  t.plan(2)
+
+  var app = getApp()
+  var fakeOutput = fake()
+
+  var content = {
+    '/': { title: 'home' },
+    '/blog': { title: 'blog' }
+  }
+  var opts = {
+    clear: false,
+    copy: [],
+    output: path.join(process.cwd(), './public'),
+    outputRoute: fakeOutput,
+    verbose: false
+  }
+  await crane(app, { content: content }, '<!-- @title -->', opts)
+
+  t.equals(fakeOutput.callCount(), 2, 'outputRoute was called twice')
+  t.same(fakeOutput.lastArgs(), ['/blog', 'blog', opts], 'arguments are correct')
 })
 
 function getApp () {

@@ -18,6 +18,7 @@
   "license": "ISC",
   "devDependencies": {
     "choo": "^7.0.0",
+    "fek": "^1.0.0",
     "standard": "^13.1.0",
     "tape": "^4.11.0"
   },

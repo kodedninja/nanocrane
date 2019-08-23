@@ -16,8 +16,10 @@ module.exports = async function (app, extendState, htmlTemplate, options) {
   assert(typeof htmlTemplate === 'string', 'nanocrane: html must be a string')
 
   options = Object.assign({
-    output: path.join(process.cwd(), './public'),
+    clear: true,
     copy: [],
+    output: path.join(process.cwd(), './public'),
+    outputRoute: writeRoute,
     verbose: false
   }, options)
 
@@ -25,15 +27,14 @@ module.exports = async function (app, extendState, htmlTemplate, options) {
   assert(typeof state.content === 'object', 'nanocrane: state.content must be an object')
 
   // clear and ensure output directory
-  await rmrf(options.output)
+  if (options.clear) {
+    await rmrf(options.output)
+  }
   ensure(options.output)
 
   Object.keys(state.content).map(function (route) {
     var rendered = app.toString(route, state)
     var html = decorate(htmlTemplate, state, rendered)
-
-    var outputPath = path.join(options.output, route)
-    ensure(outputPath)
 
     if (process.env.NODE_ENV === 'production') {
       html = minify(html, {
@@ -45,7 +46,7 @@ module.exports = async function (app, extendState, htmlTemplate, options) {
       })
     }
 
-    fs.writeFileSync(path.join(outputPath, 'index.html'), html)
+    options.outputRoute(route, html, options)
     if (options.verbose) console.log(`built ${route}`)
   })
 
@@ -61,6 +62,15 @@ module.exports = async function (app, extendState, htmlTemplate, options) {
   })
 }
 
+// default output behaviour: write to output folder
+function writeRoute (route, html, options) {
+  var outputPath = path.join(options.output, route)
+  ensure(outputPath)
+  fs.writeFileSync(path.join(outputPath, 'index.html'), html)
+}
+
+// replace patterns in the html template
+// (str, obj, str) -> str
 function decorate (template, state, rendered) {
   return template
     .replace(PATTERN_CONTENT, decode(rendered))
@@ -68,6 +78,7 @@ function decorate (template, state, rendered) {
     .replace(PATTERN_TITLE, state.title)
 }
 
+// (fn) -> fn
 function promisify (fn) {
   return function (...args) {
     return new Promise(function (resolve, reject) {
@@ -82,6 +93,7 @@ function promisify (fn) {
   }
 }
 
+// ensures directory exists
 function ensure (path) {
   !fs.existsSync(path) && fs.mkdirSync(path)
 }
