@@ -23,8 +23,7 @@ module.exports = async function (app, extendState, htmlTemplate, options) {
     verbose: false
   }, options)
 
-  var state = Object.assign(app.state, extendState)
-  assert(typeof state.content === 'object', 'nanocrane: state.content must be an object')
+  assert(typeof extendState.content === 'object', 'nanocrane: extendState.content must be an object')
 
   // clear and ensure output directory
   if (options.clear) {
@@ -32,7 +31,9 @@ module.exports = async function (app, extendState, htmlTemplate, options) {
   }
   ensure(options.output)
 
-  Object.keys(state.content).map(function (route) {
+  Object.keys(extendState.content).map(function (route) {
+    var state = Object.assign(app.state, extendState)
+
     var rendered = app.toString(route, state)
     var html = decorate(htmlTemplate, state, rendered)
 
