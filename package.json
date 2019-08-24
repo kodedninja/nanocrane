@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "html-minifier": "^4.0.0",
+    "mkdirp": "^0.5.1",
     "ncp": "^2.0.0",
     "parse-entities": "^1.2.2",
     "rimraf": "^3.0.0"

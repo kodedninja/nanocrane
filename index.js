@@ -5,6 +5,7 @@ var fs = require('fs')
 var ncp = promisify(require('ncp'))
 var rmrf = promisify(require('rimraf'))
 var minify = require('html-minifier').minify
+var mkdirp = require('mkdirp').sync
 
 var PATTERN_STATE = '<!-- @state -->'
 var PATTERN_CONTENT = '<!-- @content -->'
@@ -29,7 +30,7 @@ module.exports = async function (app, extendState, htmlTemplate, options) {
   if (options.clear) {
     await rmrf(options.output)
   }
-  ensure(options.output)
+  mkdirp(options.output)
 
   Object.keys(extendState.content).map(function (route) {
     var state = Object.assign(app.state, extendState)
@@ -66,7 +67,7 @@ module.exports = async function (app, extendState, htmlTemplate, options) {
 // default output behaviour: write to output folder
 function writeRoute (route, html, options) {
   var outputPath = path.join(options.output, route)
-  ensure(outputPath)
+  mkdirp(outputPath)
   fs.writeFileSync(path.join(outputPath, 'index.html'), html)
 }
 
@@ -92,9 +93,4 @@ function promisify (fn) {
       })
     })
   }
-}
-
-// ensures directory exists
-function ensure (path) {
-  !fs.existsSync(path) && fs.mkdirSync(path)
 }
