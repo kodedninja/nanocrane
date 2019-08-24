@@ -19,7 +19,7 @@ npm i nanocrane
 
 ```javascript
 var app = require('./index.js')
-var nanocrane = require('..')
+var nanocrane = require('nanocrane')
 
 var content = {
   '/': { title: 'home' },
