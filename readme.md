@@ -42,7 +42,7 @@ nanocrane(app, { content: content }, template)
 
 ### `nanocrane(app, state, htmlString, options)`
 
-`app` is a mounted Choo application, `state` is an object that'll be forwarded to Choo's state, `htmlString` is the template of the outputted HTML files.
+`app` is a mounted Choo application, `state` is an object that'll be forwarded to Choo's state, `htmlString` is the template of the outputted HTML files. Returns a `Promise`.
 
 `state.content` must be set and follow [`nanocontent`](https://github.com/jondashkyle/nanocontent)'s basic structure.
 
@@ -55,8 +55,10 @@ In the template it'll replace the following:
 Options:
 ```
 {
-  output: string path,
-  copy: array of string paths,
+  clear: bool - whether to clear output path (default: true),
+  copy: array - paths to copy to output,
+  output: string,
+  outputRoute: function - called on every route with `(route, html, options)` (default: write to output directory),
   verbose: bool
 }
 ```
